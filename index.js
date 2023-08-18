@@ -1,4 +1,5 @@
 const express = require('express');
+const ip = require('ip');
 require('dotenv').config();
 const bodyParser = require('body-parser');
 
@@ -16,12 +17,12 @@ const init = async () => {
   db.init()
 }
 
-app.use('/api', limiters.appLimiter)
-app.use('/api/account', routes.accountRoutes);
+app.use('/', limiters.appLimiter)
+app.use('/api/users', routes.accountRoutes);
 app.use('/api/todos', routes.todoRoutes);
 
 
 app.listen(PORT, async () => {
-  console.log(`Server running on ${PORT}`);
+  console.log(`Server running on ${ip.address()}:${PORT}`);
   await init()
 });
